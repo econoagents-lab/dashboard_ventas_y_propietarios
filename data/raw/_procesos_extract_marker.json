@@ -1,0 +1,7 @@
+{
+  "table": "procesos",
+  "extract_date": "2026-06-23",
+  "extracted_at": "2026-06-23T10:44:58",
+  "rows": 4708,
+  "format": "parquet"
+}

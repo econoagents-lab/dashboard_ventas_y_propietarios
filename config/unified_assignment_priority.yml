@@ -1,0 +1,14 @@
+priority:
+  - MANUAL
+  - EFAC_DNI_PROYECTO_UNIDAD
+  - EFAC_PROYECTO_UNIDAD_SIN_DNI
+  - EXACTO_DNI_PROYECTO_UNIDAD
+  - EXACTO_DNI_UNIDAD_UNICA
+  - ML_CANDIDATO
+  - NO_MATCH
+
+notes:
+  source_company_required_for_efac: true
+  comprobante_key: source_company + nro_comprobante_norm
+  item_key_recommended: codigo_proyecto + documento_cliente_norm + codigo_proforma + codigo_item
+  compra_key_recommended: codigo_proyecto + documento_cliente_norm + codigo_proforma

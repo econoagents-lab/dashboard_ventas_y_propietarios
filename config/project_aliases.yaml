@@ -1,0 +1,56 @@
+# Catálogo editable para OPS: aliases usados para detectar proyectos desde unidad_detalle.
+projects:
+  Tizón y Bueno:
+    aliases: ["TIZON Y BUENO", "TIZON BUENO", "T Y B", "T&B", "TYB", "TIZON", "TB"]
+    crm_codes: ["TYB", "TIZON", "TIZON_Y_BUENO"]
+  Fenix:
+    aliases: ["FENIX", "FÉNIX"]
+    crm_codes: ["FENIX", "FNX"]
+  Edificio Urbanzen:
+    aliases: ["EDIFICIO URBANZEN", "URBANZEN", "URBAN ZEN", "URBAN"]
+    crm_codes: ["URBANZEN", "URBAN", "URB", "URT"]
+  Capadocia:
+    aliases: ["CAPADOCIA"]
+    crm_codes: ["CAPADOCIA", "CAP"]
+  Alicanto:
+    aliases: ["ALICANTO", "EDIF ALICANTO", "EDIFICIO ALICANTO"]
+    crm_codes: ["ALICANTO", "ALI"]
+  Torre Nápoles:
+    aliases: ["TORRE NAPOLES", "TORRE NÁPOLES", "NAPOLES", "NÁPOLES"]
+    crm_codes: ["NAPOLES", "NAP", "TORRE_NAPOLES"]
+  Modena:
+    aliases: ["MODENA", "MÓDENA"]
+    crm_codes: ["MODENA", "MOD"]
+  Sialia:
+    aliases: ["SIALIA"]
+    crm_codes: ["SIALIA", "SIA"]
+  Matera:
+    aliases: ["MATERA"]
+    crm_codes: ["MATERA", "MAT"]
+  Edificio Mariategui:
+    aliases: ["EDIFICIO MARIATEGUI", "MARIATEGUI", "Edif"]
+    crm_codes: ["MARIATEGUI", "MARI", "MRT"]
+
+  Edificio Cuba Connect:
+    aliases: ["EDIFICIO CUBA CONNECT", "CUBA CONNECT", "EDIF CUBA"]
+    crm_codes: ["CUBA CONNECT", "CUBA", "EDIF CUBA", "CUB"]
+
+  Edificio Saenz:
+    aliases: ["EDIFICIO SAENZ", "SAENZ", "EDIF SAENZ"]
+    crm_codes: ["SAENZ", "EDIF SAENZ", "SAE"]
+
+  Edificio Santa Cruz Infinite:
+    aliases: ["EDIFICIO SANTA CRUZ INFINITE", "SANTA CRUZ INFINITE", "EDIF SANTA CRUZ"]
+    crm_codes: ["SANTA CRUZ INFINITE", "SANTA CRUZ", "EDIF SANTA CRUZ", "SC"]
+
+  Edificio Edificio Unique:
+    aliases: ["EDIFICIO UNIQUE", "UNIQUE", "unique"]
+    crm_codes: ["UNIQUE", "UNI", "EDIF SANTA CRUZ", "SC"]
+
+  Los Jardines de Urteaga:
+    aliases: ["EDIFICIO LOS JARDINES DE URTIAGA", "LOS JARDINES DE URTIAGA", "JARDINES URTIAGA"]
+    crm_codes: ["LOS JARDINES DE URTIAGA", "JARDINES", "EDIF JARDINES", "JAR"]
+
+  Tradiciones Prime:
+    aliases: ["TRADICIONES PRIME", "tradiciones", "prime"]
+    crm_codes: ["TRADICIONES PRIME", "TRAD", "EDIF TRAD", "TRA"]

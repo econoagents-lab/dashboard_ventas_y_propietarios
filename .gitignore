@@ -1,0 +1,15 @@
+.venv/
+env/
+__pycache__/
+*.pyc
+data/bronze/*.parquet
+data/bronze/*.bak
+data/raw/*.xlsx
+data/raw/*.csv
+data/raw/*.parquet
+data/silver/
+data/gold/
+data/powerbi_outputs/
+data/_snapshots/
+logs/
+*.pbix

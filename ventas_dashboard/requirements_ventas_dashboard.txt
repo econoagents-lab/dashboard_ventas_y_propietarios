@@ -1,0 +1,5 @@
+pandas
+pyarrow
+xlsxwriter
+streamlit
+plotly

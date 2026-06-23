@@ -1,0 +1,3 @@
+documento_cliente_norm,nombre_proyecto_manual,codigo_unidad_manual,codigo_proforma_manual,tipo_unidad_manual,descripcion_contiene,fecha_inicio_regla,fecha_fin_regla,prioridad_manual,estado_regla,comentario
+47129385,Tizón y Bueno,TB-1002,,DEPA,DPTO 1002,,,1,ACTIVA,Ejemplo: asignar pagos DPTO 1002 del DNI a Tizón y Bueno TB-1002
+70689454,Tizón y Bueno,TB-1002,,DEPA,DPTO 1002,,,1,ACTIVA,Ejemplo adicional
