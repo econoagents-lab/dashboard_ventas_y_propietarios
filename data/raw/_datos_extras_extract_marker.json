@@ -1,7 +1,7 @@
 {
   "table": "datos_extras",
-  "extract_date": "2026-07-08",
-  "extracted_at": "2026-07-08T16:54:02",
-  "rows": 20698,
+  "extract_date": "2026-07-09",
+  "extracted_at": "2026-07-09T14:43:56",
+  "rows": 20712,
   "format": "parquet"
 }

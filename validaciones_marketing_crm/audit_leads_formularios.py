@@ -7,7 +7,9 @@ import re
 # CONFIGURACIÓN
 # =========================
 
-INPUT_FILE = Path("../data/raw/leads_crm.xlsx")
+#INPUT_FILE = Path("../data/raw/leads_crm.xlsx")
+INPUT_FILE = Path("../data/raw/clientes_proyectos.parquet")
+
 OUTPUT_FILE = Path("outputs/auditoria_leads_alicanto_mayo.xlsx")
 
 PROJECT_NAME = "ALICANTO"

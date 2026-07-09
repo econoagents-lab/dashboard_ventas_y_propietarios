@@ -1,7 +1,7 @@
 {
   "table": "clientes_proyectos",
-  "extract_date": "2026-07-08",
-  "extracted_at": "2026-07-08T16:55:05",
-  "rows": 200878,
+  "extract_date": "2026-07-09",
+  "extracted_at": "2026-07-09T14:48:50",
+  "rows": 200971,
   "format": "parquet"
 }

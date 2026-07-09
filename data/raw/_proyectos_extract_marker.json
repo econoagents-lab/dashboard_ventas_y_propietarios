@@ -1,7 +1,7 @@
 {
   "table": "proyectos",
-  "extract_date": "2026-07-08",
-  "extracted_at": "2026-07-08T16:54:37",
+  "extract_date": "2026-07-09",
+  "extracted_at": "2026-07-09T14:46:43",
   "rows": 18,
   "format": "parquet"
 }

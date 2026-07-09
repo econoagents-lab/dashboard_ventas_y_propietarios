@@ -1,7 +1,7 @@
 {
   "table": "clientes",
-  "extract_date": "2026-07-08",
-  "extracted_at": "2026-07-08T16:54:34",
-  "rows": 137554,
+  "extract_date": "2026-07-09",
+  "extracted_at": "2026-07-09T14:46:42",
+  "rows": 137601,
   "format": "parquet"
 }

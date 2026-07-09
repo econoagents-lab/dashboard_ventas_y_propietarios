@@ -1,7 +1,7 @@
 {
   "table": "unidades",
-  "extract_date": "2026-07-08",
-  "extracted_at": "2026-07-08T16:54:06",
+  "extract_date": "2026-07-09",
+  "extracted_at": "2026-07-09T14:44:00",
   "rows": 3237,
   "format": "parquet"
 }
