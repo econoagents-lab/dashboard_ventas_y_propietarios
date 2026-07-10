@@ -3,15 +3,7 @@ param(
     [switch]$ContinueOnRedshiftFail,
     [switch]$SkipInstall,
     [switch]$NoDashboard,
-    [switch]$NoExcel,
-    [switch]$SkipPipeline,
-    [string]$DashboardPath,
-    [string]$RawDir = "data\raw",
-    [string]$BronzeDir = "data\bronze",
-    [string]$SilverDir = "data\silver",
-    [string]$GoldDir = "data\gold",
-    [string]$ExportsDir = "data\exports",
-    [string]$OutputName = "stock_unidades_completo.xlsx"
+    [string]$DashboardPath
 )
 
 $ErrorActionPreference = "Stop"
@@ -38,15 +30,6 @@ function Resolve-PythonCommand {
         if ($found) { return $cmd }
     }
     throw "No se encontró Python en PATH. Instala Python o activa tu entorno virtual manualmente."
-}
-
-function Resolve-ProjectPath {
-    param([Parameter(Mandatory = $true)][string]$PathValue)
-
-    if ([System.IO.Path]::IsPathRooted($PathValue)) {
-        return $PathValue
-    }
-    return (Join-Path $Root $PathValue)
 }
 
 function Use-ProjectEnv {
@@ -121,22 +104,10 @@ function Install-Dependencies {
         }
     }
     else {
-        Invoke-NativeStep "Instalando dependencias base medallion stock..." {
-            python -m pip install pandas pyarrow xlsxwriter streamlit plotly openpyxl
+        Invoke-NativeStep "Instalando dependencias base..." {
+            python -m pip install pandas numpy pyarrow openpyxl python-dotenv sqlalchemy psycopg2-binary rapidfuzz scikit-learn pyyaml streamlit plotly
         }
     }
-}
-
-function Resolve-MedallionPipelinePath {
-    $candidate = Join-Path $Root "scripts\medallion_stock_pipeline.py"
-    if (Test-Path $candidate) { return (Resolve-Path $candidate).Path }
-
-    $found = Get-ChildItem $Root -Recurse -File -Filter "medallion_stock_pipeline.py" |
-        Select-Object -First 1
-
-    if ($found) { return $found.FullName }
-
-    throw "No se encontró scripts\medallion_stock_pipeline.py. Copia este runner dentro del pack ventas_medallion_stock_pack."
 }
 
 function Resolve-DashboardPath {
@@ -155,10 +126,10 @@ function Resolve-DashboardPath {
     }
 
     $candidates = @(
-        "app_ventas_dashboard_stock.py",
-        "ventas_dashboard\app_ventas_dashboard_stock.py",
-        "app_ventas_dashboard_medallion.py",
+        "ventas_dashboard\run_app_ventas_dashboard.py",
+        "ventas_dashboard\app_ventas_dashboard.py",
         "app_ventas_dashboard.py",
+        "run_app_ventas_dashboard.py",
         "dashboard\app.py",
         "app.py"
     ) | ForEach-Object { Join-Path $Root $_ }
@@ -174,6 +145,7 @@ function Resolve-DashboardPath {
     if ($found) { return $found.FullName }
 
     Write-Host "No se encontró un archivo de dashboard automáticamente." -ForegroundColor Red
+    Write-Host "Archivos .py detectados en el proyecto:" -ForegroundColor Yellow
     Get-ChildItem $Root -Recurse -File -Filter "*.py" |
         Select-Object FullName |
         Format-Table -AutoSize
@@ -206,77 +178,40 @@ function Open-StreamlitDashboard {
     Write-Host "Streamlit se abrió en otra ventana para no bloquear el pipeline." -ForegroundColor Green
 }
 
-Write-Title "STOCK COMPLETO + PROPIETARIOS"
+Write-Title "PROPIETARIOS"
 Write-Host "Raíz del proyecto: $Root" -ForegroundColor DarkCyan
-Write-Host "RAW:      $(Resolve-ProjectPath $RawDir)" -ForegroundColor DarkCyan
-Write-Host "BRONZE:   $(Resolve-ProjectPath $BronzeDir)" -ForegroundColor DarkCyan
-Write-Host "SILVER:   $(Resolve-ProjectPath $SilverDir)" -ForegroundColor DarkCyan
-Write-Host "GOLD:     $(Resolve-ProjectPath $GoldDir)" -ForegroundColor DarkCyan
-Write-Host "EXPORTS:  $(Resolve-ProjectPath $ExportsDir)" -ForegroundColor DarkCyan
 
 Use-ProjectEnv
 Install-Dependencies
 
 if (-not $SkipRedshift) {
-    $redshiftScript = Join-Path $Root "tools\extract_redshift_daily.py"
-    if (Test-Path $redshiftScript) {
-        Invoke-NativeStep "0/3 Extrayendo Redshift con cache diario..." {
-            python $redshiftScript
-        } -ContinueOnFail:$ContinueOnRedshiftFail
-    }
-    else {
-        Write-Host "0/3 No existe tools\extract_redshift_daily.py. Se continúa con parquets locales en data\raw." -ForegroundColor Yellow
-    }
+    Invoke-NativeStep "0/11 Extrayendo Redshift con cache diario..." {
+        python (Join-Path $Root "tools\extract_redshift_daily.py")
+    } -ContinueOnFail:$ContinueOnRedshiftFail
 }
 else {
-    Write-Host "0/3 Saltando Redshift. Usando parquets locales existentes..." -ForegroundColor Yellow
+    Write-Host "0/11 Saltando Redshift. Usando parquets locales existentes..." -ForegroundColor Yellow
 }
 
-if (-not $SkipPipeline) {
-    Invoke-NativeStep "1/3 Construyendo bronze/silver/gold + Excel aesthetic..." {
-        $pipelinePath = Resolve-MedallionPipelinePath
-        $argsList = @(
-            $pipelinePath,
-            "--raw_dir", (Resolve-ProjectPath $RawDir),
-            "--bronze_dir", (Resolve-ProjectPath $BronzeDir),
-            "--silver_dir", (Resolve-ProjectPath $SilverDir),
-            "--gold_dir", (Resolve-ProjectPath $GoldDir),
-            "--exports_dir", (Resolve-ProjectPath $ExportsDir),
-            "--output_name", $OutputName,
-            "--build_all"
-        )
-
-        if (-not $NoExcel) {
-            $argsList += "--export_excel"
-        }
-
-        python @argsList
-    }
-}
-else {
-    Write-Host "1/3 Saltando pipeline por parámetro -SkipPipeline. Se espera gold existente." -ForegroundColor Yellow
+Invoke-NativeStep "1/11 Ejecutando Ventas..." {
+    python (Join-Path $Root "ventas_por_cobrar\main_pipeline.py")
 }
 
 if (-not $NoDashboard) {
-    Invoke-NativeStep "2/3 Abriendo Dashboard Stock Completo..." {
+    Invoke-NativeStep "2/11 Abriendo Dashboard Ventas..." {
         $resolvedDashboardPath = Resolve-DashboardPath -RequestedPath $DashboardPath
         Open-StreamlitDashboard -Path $resolvedDashboardPath
     }
 }
 else {
-    Write-Host "2/3 Saltando dashboard por parámetro -NoDashboard" -ForegroundColor Yellow
+    Write-Host "2/11 Saltando dashboard por parámetro -NoDashboard" -ForegroundColor Yellow
 }
 
 Write-Host ""
 Write-Host "==========================================" -ForegroundColor Green
-Write-Host "Listo. Revisa las capas generadas:" -ForegroundColor Green
-Write-Host "- data\bronze" -ForegroundColor Green
-Write-Host "- data\silver" -ForegroundColor Green
-Write-Host "- data\gold\mart_propietarios_ventas.parquet" -ForegroundColor Green
-Write-Host "- data\gold\mart_stock_unidades_completo.parquet" -ForegroundColor Green
-if (-not $NoExcel) {
-    Write-Host "- data\exports\$OutputName" -ForegroundColor Green
-}
+Write-Host "Listo. Revisa la carpeta outputs" -ForegroundColor Green
 Write-Host "==========================================" -ForegroundColor Green
 
 Write-Title "PIPELINE COMPLETADO" "Green"
+Write-Host "Output matriz: data\gold\power_bi\matriz_venta_cobranza" -ForegroundColor Green
+Write-Host ""
