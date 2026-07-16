@@ -1,0 +1,30 @@
+{
+  "filas_procesos_originales": 4806,
+  "filas_procesos_activos_relevantes": 2710,
+  "filas_cocheras_activas_sin_unidad_asignada": 316,
+  "filas_departamentos_activos": 2338,
+  "proyectos_considerados": [
+    "TZ",
+    "NP",
+    "EEUU",
+    "MD",
+    "MA",
+    "SL",
+    "GY",
+    "FX",
+    "MT",
+    "CP"
+  ],
+  "cocheras_por_proyecto": {
+    "Tizón y Bueno": 74,
+    "Edificio Urbanzen": 33,
+    "Torre Nápoles": 32,
+    "Modena": 31,
+    "Edificio Mariategui": 30,
+    "Capadocia": 28,
+    "Sialia": 25,
+    "Fenix": 22,
+    "Matera": 21,
+    "Alicanto": 20
+  }
+}
